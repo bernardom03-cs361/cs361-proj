@@ -3,10 +3,26 @@
     CS 361 Project: Real or Edited
 */
 
-import { useState } from 'react'
+import axios from 'axios';
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 function Home() {
+
+  const [latest, setLatest] = useState(1)
+
+  useEffect(() => {
+    async function fetchLatest() {
+      try {
+        const res = await axios.get("http://localhost:5723/daily");
+        setLatest(res.data.length);
+      } catch (err) {
+        console.error("Failed to fetch latest challenge:", err);
+      }
+    }
+
+    fetchLatest();
+  }, []);
 
   return (
     <div className='home-container'>
@@ -18,7 +34,7 @@ function Home() {
         <p className='home-text'>You must click on which one you think is the fake Wikipedia article, and which sentence(s) you believe were modified</p>
         <p className='home-text'>Once you are ready, submit your answer and head to the next round</p>
       </div>
-      <Link to="/game" className='home-button'>Play Today's Game</Link>
+      <Link to={`/game/${latest}`} className='home-button'>Play Today's Game</Link>
     </div>
   )
 }

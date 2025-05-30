@@ -12,14 +12,18 @@ import Game from './pages/Game.jsx'
 import Results from './pages/Results.jsx'
 import Layout from './components/Layout.jsx';
 import Previous from './pages/Previous.jsx';
+import NotFound from './pages/NotFound.jsx'
+
+import { gameLoader } from './loaders/gameLoader.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />
-      <Route path="/game" element={<Game />} />
+      <Route path="/game/:id" element={<Game />} loader={gameLoader} errorElement={<NotFound/>}/>
       <Route path='/results' element={<Results />} />
       <Route path='/previous' element={<Previous />} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );

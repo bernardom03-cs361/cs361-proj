@@ -3,16 +3,18 @@
     CS 361 Project: Real or Edited
 */
 
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 function Results() {
+  const location = useLocation();
+  const { score } = location.state || {}; 
 
   return (
     <div className='results-container'>
-        results here
+      <h2>Game Over</h2>
+      <p>Your score: {score} </p>
     </div>
-  )
+  );
 }
 
 export default Results
